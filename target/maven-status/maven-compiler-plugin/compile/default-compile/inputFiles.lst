@@ -1,3 +1,7 @@
 C:\Users\Lenovo Flex 5\Documents\NetBeansProjects\AplikasiRPL2\src\main\java\com\mycompany\aplikasirpl2\AplikasiRPL2.java
-C:\Users\Lenovo Flex 5\Documents\NetBeansProjects\AplikasiRPL2\src\main\java\com\mycompany\aplikasirpl2\AplikasiRPL2GUI.java
-C:\Users\Lenovo Flex 5\Documents\NetBeansProjects\AplikasiRPL2\src\main\java\login\java.java
+C:\Users\Lenovo Flex 5\Documents\NetBeansProjects\AplikasiRPL2\src\main\java\com\mycompany\aplikasirpl2\controller\PegawaiController.java
+C:\Users\Lenovo Flex 5\Documents\NetBeansProjects\AplikasiRPL2\src\main\java\com\mycompany\aplikasirpl2\model\KaryawanTetap.java
+C:\Users\Lenovo Flex 5\Documents\NetBeansProjects\AplikasiRPL2\src\main\java\com\mycompany\aplikasirpl2\model\Pegawai.java
+C:\Users\Lenovo Flex 5\Documents\NetBeansProjects\AplikasiRPL2\src\main\java\com\mycompany\aplikasirpl2\util\HibernateUtil.java
+C:\Users\Lenovo Flex 5\Documents\NetBeansProjects\AplikasiRPL2\src\main\java\com\mycompany\aplikasirpl2\view\AplikasiRPL2GUI.java
+C:\Users\Lenovo Flex 5\Documents\NetBeansProjects\AplikasiRPL2\src\main\java\com\mycompany\aplikasirpl2\view\Formlogin.java

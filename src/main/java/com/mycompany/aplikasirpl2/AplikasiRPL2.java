@@ -1,5 +1,6 @@
 package com.mycompany.aplikasirpl2;
 
+import com.mycompany.aplikasirpl2.view.AplikasiRPL2GUI;
 import javax.swing.SwingUtilities;
 
 class Pegawai {

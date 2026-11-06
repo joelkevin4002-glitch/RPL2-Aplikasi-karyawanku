@@ -1,9 +1,12 @@
-package com.mycompany.aplikasirpl2;
+package com.mycompany.aplikasirpl2.view;
+
+import com.mycompany.aplikasirpl2.model.Pegawai;
+import com.mycompany.aplikasirpl2.controller.PegawaiController;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.List;
 
 // Import JasperReports
 import net.sf.jasperreports.engine.*;
@@ -17,10 +20,11 @@ public class AplikasiRPL2GUI extends JFrame {
     private DefaultTableModel tableModel;
     private JButton btnTambah, btnCari, btnHapus, btnClear, btnCetak;
 
-    private static ArrayList<KaryawanTetap> listPegawai = new ArrayList<>();
+    // Inisialisasi Controller untuk Hibernate & Database
+    private PegawaiController controller = new PegawaiController();
 
     public AplikasiRPL2GUI() {
-        setTitle("Aplikasi Karyawanku - Praktikum RPL 2");
+        setTitle("Aplikasi Karyawanku - Praktikum RPL 2 (Database Connected)");
         setSize(850, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -29,8 +33,8 @@ public class AplikasiRPL2GUI extends JFrame {
         // Panel Header
         JPanel panelHeader = new JPanel();
         panelHeader.setBackground(new Color(41, 128, 185));
-        JLabel lblJudul = new JLabel("APLIKASI ");
-        lblJudul.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        JLabel lblJudul = new JLabel("APLIKASI CAPITAL HR - DATABASE CONNECTED");
+        lblJudul.setFont(new Font("Segoe UI", Font.BOLD, 20));
         lblJudul.setForeground(Color.WHITE);
         panelHeader.add(lblJudul);
         add(panelHeader, BorderLayout.NORTH);
@@ -110,6 +114,22 @@ public class AplikasiRPL2GUI extends JFrame {
         btnHapus.addActionListener(e -> hapusData());
         btnCari.addActionListener(e -> cariData());
         btnCetak.addActionListener(e -> cetakLaporanJasper());
+
+        // Load data dari database saat pertama kali dibuka
+        loadDataKeTabel();
+    }
+
+    private void loadDataKeTabel() {
+        tableModel.setRowCount(0);
+        List<Pegawai> list = controller.getAllPegawai();
+        for (Pegawai p : list) {
+            tableModel.addRow(new Object[]{
+                p.getIdPegawai(), 
+                p.getNama(), 
+                p.getDepartemen(), 
+                "Rp " + (long)p.getGajiPokok()
+            });
+        }
     }
 
     private void tambahData() {
@@ -124,12 +144,13 @@ public class AplikasiRPL2GUI extends JFrame {
                 return;
             }
 
-            KaryawanTetap kt = new KaryawanTetap(id, nama, dept, gaji);
-            listPegawai.add(kt);
+            // Simpan ke database MySQL via Hibernate
+            Pegawai pegawai = new Pegawai(id, nama, dept, gaji);
+            controller.simpanPegawai(pegawai);
 
-            tableModel.addRow(new Object[]{kt.getIdPegawai(), kt.getNama(), kt.getDepartemen(), "Rp " + (long)kt.getGajiPokok()});
+            loadDataKeTabel();
             clearForm();
-            JOptionPane.showMessageDialog(this, "Data Karyawan Berhasil Ditambahkan!");
+            JOptionPane.showMessageDialog(this, "Data Karyawan Berhasil Disimpan ke Database!");
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Gaji harus berupa angka!", "Error Input", JOptionPane.ERROR_MESSAGE);
         }
@@ -141,16 +162,16 @@ public class AplikasiRPL2GUI extends JFrame {
         txtDept.setText("");
         txtGaji.setText("");
         txtCari.setText("");
-        refreshTabel(listPegawai);
+        loadDataKeTabel();
     }
 
     private void hapusData() {
         int selectedRow = tablePegawai.getSelectedRow();
         if (selectedRow != -1) {
             String idTarget = tableModel.getValueAt(selectedRow, 0).toString();
-            listPegawai.removeIf(p -> p.getIdPegawai().equals(idTarget));
-            tableModel.removeRow(selectedRow);
-            JOptionPane.showMessageDialog(this, "Data berhasil dihapus!");
+            controller.hapusPegawai(idTarget);
+            loadDataKeTabel();
+            JOptionPane.showMessageDialog(this, "Data berhasil dihapus dari database!");
         } else {
             JOptionPane.showMessageDialog(this, "Pilih baris tabel yang ingin dihapus terlebih dahulu!");
         }
@@ -159,28 +180,27 @@ public class AplikasiRPL2GUI extends JFrame {
     private void cariData() {
         String keyword = txtCari.getText().trim().toLowerCase();
         if (keyword.isEmpty()) {
-            refreshTabel(listPegawai);
+            loadDataKeTabel();
             return;
         }
 
-        ArrayList<KaryawanTetap> hasilCari = new ArrayList<>();
-        for (KaryawanTetap p : listPegawai) {
-            if (p.getIdPegawai().toLowerCase().contains(keyword) || p.getNama().toLowerCase().contains(keyword)) {
-                hasilCari.add(p);
-            }
-        }
-        refreshTabel(hasilCari);
-    }
-
-    private void refreshTabel(ArrayList<KaryawanTetap> list) {
         tableModel.setRowCount(0);
-        for (KaryawanTetap kt : list) {
-            tableModel.addRow(new Object[]{kt.getIdPegawai(), kt.getNama(), kt.getDepartemen(), "Rp " + (long)kt.getGajiPokok()});
+        List<Pegawai> list = controller.getAllPegawai();
+        for (Pegawai p : list) {
+            if (p.getIdPegawai().toLowerCase().contains(keyword) || p.getNama().toLowerCase().contains(keyword)) {
+                tableModel.addRow(new Object[]{
+                    p.getIdPegawai(), 
+                    p.getNama(), 
+                    p.getDepartemen(), 
+                    "Rp " + (long)p.getGajiPokok()
+                });
+            }
         }
     }
 
     private void cetakLaporanJasper() {
-        if (listPegawai.isEmpty()) {
+        List<Pegawai> list = controller.getAllPegawai();
+        if (list.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Database masih kosong, tidak ada data untuk dicetak!", "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -188,7 +208,7 @@ public class AplikasiRPL2GUI extends JFrame {
         try {
             String reportPath = "src/main/java/com/mycompany/aplikasirpl2/LaporanKaryawan.jrxml";
             JasperReport jasperReport = JasperCompileManager.compileReport(reportPath);
-            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(listPegawai);
+            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(list);
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, dataSource);
             JasperViewer.viewReport(jasperPrint, false);
         } catch (Exception ex) {
