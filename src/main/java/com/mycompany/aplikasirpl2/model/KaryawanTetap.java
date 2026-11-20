@@ -1,13 +1,25 @@
 package com.mycompany.aplikasirpl2.model;
 
 public class KaryawanTetap extends Pegawai {
-    private double gajiPokok;
+    private Double gajiPokok;
 
-    public KaryawanTetap(String idPegawai, String nama, String departemen, double gajiPokok) {
-        super(idPegawai, nama, departemen);
+    public KaryawanTetap() {
+        super();
+    }
+
+    public KaryawanTetap(String idPegawai, String nama, String departemen, Double gajiPokok) {
+        super(idPegawai, nama, departemen, gajiPokok);
         this.gajiPokok = gajiPokok;
     }
 
-    public double getGajiPokok() { return gajiPokok; }
-    public void setGajiPokok(double gajiPokok) { this.gajiPokok = gajiPokok; }
+    @Override
+    public Double getGajiPokok() {
+        return gajiPokok;
+    }
+
+    @Override
+    public void setGajiPokok(Double gajiPokok) {
+        this.gajiPokok = gajiPokok;
+        super.setGajiPokok(gajiPokok);
+    }
 }

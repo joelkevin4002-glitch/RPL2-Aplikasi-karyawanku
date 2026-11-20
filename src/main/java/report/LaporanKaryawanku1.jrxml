@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LaporanKaryawanku1" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="df5a0447-1687-43f1-80fb-4382ba9e87ce">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Report Adapter"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT * FROM tb_pegawai]]>
+	</queryString>
+	<field name="nama" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nama"/>
+		<property name="com.jaspersoft.studio.field.label" value="nama"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_pegawai"/>
+	</field>
+	<field name="idPegawai" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="idPegawai"/>
+		<property name="com.jaspersoft.studio.field.label" value="idPegawai"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_pegawai"/>
+	</field>
+	<field name="departemen" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="departemen"/>
+		<property name="com.jaspersoft.studio.field.label" value="departemen"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_pegawai"/>
+	</field>
+	<field name="gajiPokok" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="gajiPokok"/>
+		<property name="com.jaspersoft.studio.field.label" value="gajiPokok"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_pegawai"/>
+	</field>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="fa801a59-fa36-48b8-85f7-1de5d329e5ac"/>
+				<staticText>
+					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="66d0df77-0ede-41c0-8854-290abba3a893"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TITLE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="b62624c9-e2fe-4a59-8ade-72043e791295"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Add a description here]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="6c0d0bdd-4446-437b-8c75-ee03a39038b2"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="138" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="6a58c8cf-0c9e-402b-bda3-3a207a0010af">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ffc92ce2-c2c1-4414-8643-dd1c90de9237"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[nama]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="138" y="0" width="138" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="b7a54441-871d-41a9-890e-4cdc930e27bf">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4d36f07e-09f5-4440-90b7-2108a90d253c"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[idPegawai]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="276" y="0" width="138" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="66b36de7-520f-43a1-8b6c-fb1c73236c8b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1d870127-c498-4719-88d7-a36a515e42fa"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[departemen]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="414" y="0" width="138" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="6c2bf4a7-84eb-4038-ab33-25c5cef7345e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="aed9784e-1345-4955-b1fd-76493e2421f2"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[gajiPokok]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="7c4ce077-d987-41af-9be9-6b4868acfa57"/>
+			</line>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="0" y="0" width="138" height="20" uuid="a57a1594-0660-4fbb-9f94-a4ac86dcc05f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ffc92ce2-c2c1-4414-8643-dd1c90de9237"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nama}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="138" y="0" width="138" height="20" uuid="05a81796-8733-44d7-8732-c9b8d17125c6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4d36f07e-09f5-4440-90b7-2108a90d253c"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idPegawai}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="276" y="0" width="138" height="20" uuid="3eeff549-6b31-442a-9b3d-d3c82d5925b2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1d870127-c498-4719-88d7-a36a515e42fa"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{departemen}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="414" y="0" width="138" height="20" uuid="a854252e-2329-4fb7-b33b-683a1711ee9f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="aed9784e-1345-4955-b1fd-76493e2421f2"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gajiPokok}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="ee27c881-37fb-4abd-9933-fb59526e4641"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="bd6f3f53-267c-4e78-ba0e-c87a13ca882a"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="cbebcb07-3cc1-4ae6-81f0-52a305d68624"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

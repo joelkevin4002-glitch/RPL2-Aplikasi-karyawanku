@@ -9,7 +9,11 @@ import java.awt.*;
 import java.util.List;
 
 // Import JasperReports
-import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.view.JasperViewer;
 
@@ -119,15 +123,19 @@ public class AplikasiRPL2GUI extends JFrame {
         loadDataKeTabel();
     }
 
+    private long formatGajiLong(Pegawai p) {
+        return (p.getGajiPokok() != null) ? p.getGajiPokok().longValue() : 0L;
+    }
+
     private void loadDataKeTabel() {
         tableModel.setRowCount(0);
         List<Pegawai> list = controller.getAllPegawai();
         for (Pegawai p : list) {
             tableModel.addRow(new Object[]{
-                p.getIdPegawai(), 
-                p.getNama(), 
-                p.getDepartemen(), 
-                "Rp " + (long)p.getGajiPokok()
+                p.getIdPegawai(),
+                p.getNama(),
+                p.getDepartemen(),
+                "Rp " + formatGajiLong(p)
             });
         }
     }
@@ -187,12 +195,14 @@ public class AplikasiRPL2GUI extends JFrame {
         tableModel.setRowCount(0);
         List<Pegawai> list = controller.getAllPegawai();
         for (Pegawai p : list) {
-            if (p.getIdPegawai().toLowerCase().contains(keyword) || p.getNama().toLowerCase().contains(keyword)) {
+            String id = (p.getIdPegawai() != null) ? p.getIdPegawai() : "";
+            String nama = (p.getNama() != null) ? p.getNama() : "";
+            if (id.toLowerCase().contains(keyword) || nama.toLowerCase().contains(keyword)) {
                 tableModel.addRow(new Object[]{
-                    p.getIdPegawai(), 
-                    p.getNama(), 
-                    p.getDepartemen(), 
-                    "Rp " + (long)p.getGajiPokok()
+                    p.getIdPegawai(),
+                    p.getNama(),
+                    p.getDepartemen(),
+                    "Rp " + formatGajiLong(p)
                 });
             }
         }
@@ -206,14 +216,15 @@ public class AplikasiRPL2GUI extends JFrame {
         }
 
         try {
-            String reportPath = "src/main/java/com/mycompany/aplikasirpl2/LaporanKaryawan.jrxml";
+            String reportPath = "src/main/java/report/LaporanKaryawanku1.jrxml";
             JasperReport jasperReport = JasperCompileManager.compileReport(reportPath);
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(list);
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, dataSource);
             JasperViewer.viewReport(jasperPrint, false);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "File 'LaporanKaryawan.jrxml' belum ditemukan di folder project.\nDetail: " + ex.getMessage(), 
-                    "Info Jaspersoft Studio", JOptionPane.INFORMATION_MESSAGE);
+        } catch (JRException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Gagal mencetak laporan JasperReports.\nDetail: " + ex.getMessage(),
+                    "Error JasperReports", JOptionPane.ERROR_MESSAGE);
         }
     }
 
