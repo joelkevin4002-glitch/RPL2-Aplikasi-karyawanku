@@ -1,9 +1,15 @@
 C:\Users\Lenovo Flex 5\Documents\NetBeansProjects\AplikasiRPL2\src\main\java\com\mycompany\aplikasirpl2\AplikasiRPL2.java
+C:\Users\Lenovo Flex 5\Documents\NetBeansProjects\AplikasiRPL2\src\main\java\com\mycompany\aplikasirpl2\controller\IzinController.java
 C:\Users\Lenovo Flex 5\Documents\NetBeansProjects\AplikasiRPL2\src\main\java\com\mycompany\aplikasirpl2\controller\PegawaiController.java
+C:\Users\Lenovo Flex 5\Documents\NetBeansProjects\AplikasiRPL2\src\main\java\com\mycompany\aplikasirpl2\dao\IzinDAO.java
+C:\Users\Lenovo Flex 5\Documents\NetBeansProjects\AplikasiRPL2\src\main\java\com\mycompany\aplikasirpl2\dao\IzinDAOImpl.java
 C:\Users\Lenovo Flex 5\Documents\NetBeansProjects\AplikasiRPL2\src\main\java\com\mycompany\aplikasirpl2\dao\PegawaiDAO.java
 C:\Users\Lenovo Flex 5\Documents\NetBeansProjects\AplikasiRPL2\src\main\java\com\mycompany\aplikasirpl2\dao\PegawaiDAOImpl.java
+C:\Users\Lenovo Flex 5\Documents\NetBeansProjects\AplikasiRPL2\src\main\java\com\mycompany\aplikasirpl2\model\Izin.java
 C:\Users\Lenovo Flex 5\Documents\NetBeansProjects\AplikasiRPL2\src\main\java\com\mycompany\aplikasirpl2\model\KaryawanTetap.java
 C:\Users\Lenovo Flex 5\Documents\NetBeansProjects\AplikasiRPL2\src\main\java\com\mycompany\aplikasirpl2\model\Pegawai.java
+C:\Users\Lenovo Flex 5\Documents\NetBeansProjects\AplikasiRPL2\src\main\java\com\mycompany\aplikasirpl2\service\IzinService.java
+C:\Users\Lenovo Flex 5\Documents\NetBeansProjects\AplikasiRPL2\src\main\java\com\mycompany\aplikasirpl2\service\IzinServiceImpl.java
 C:\Users\Lenovo Flex 5\Documents\NetBeansProjects\AplikasiRPL2\src\main\java\com\mycompany\aplikasirpl2\service\PegawaiService.java
 C:\Users\Lenovo Flex 5\Documents\NetBeansProjects\AplikasiRPL2\src\main\java\com\mycompany\aplikasirpl2\service\PegawaiServiceImpl.java
 C:\Users\Lenovo Flex 5\Documents\NetBeansProjects\AplikasiRPL2\src\main\java\com\mycompany\aplikasirpl2\util\HibernateUtil.java

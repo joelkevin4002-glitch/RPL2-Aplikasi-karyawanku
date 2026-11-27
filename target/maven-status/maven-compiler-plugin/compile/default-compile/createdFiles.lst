@@ -1,5 +1,10 @@
+com\mycompany\aplikasirpl2\controller\IzinController.class
+com\mycompany\aplikasirpl2\dao\IzinDAO.class
 com\mycompany\aplikasirpl2\model\Pegawai.class
 com\mycompany\aplikasirpl2\util\HibernateUtil.class
+com\mycompany\aplikasirpl2\dao\IzinDAOImpl.class
+com\mycompany\aplikasirpl2\service\IzinService.class
+com\mycompany\aplikasirpl2\model\Izin.class
 com\mycompany\aplikasirpl2\dao\PegawaiDAOImpl.class
 com\mycompany\aplikasirpl2\service\PegawaiService.class
 com\mycompany\aplikasirpl2\model\KaryawanTetap.class
@@ -9,5 +14,6 @@ com\mycompany\aplikasirpl2\KaryawanTetap.class
 com\mycompany\aplikasirpl2\AplikasiRPL2.class
 com\mycompany\aplikasirpl2\dao\PegawaiDAO.class
 com\mycompany\aplikasirpl2\controller\PegawaiController.class
+com\mycompany\aplikasirpl2\service\IzinServiceImpl.class
 com\mycompany\aplikasirpl2\Pegawai.class
 com\mycompany\aplikasirpl2\view\AplikasiRPL2GUI.class

@@ -1,11 +1,14 @@
 package com.mycompany.aplikasirpl2.view;
 
 import com.mycompany.aplikasirpl2.model.Pegawai;
+import com.mycompany.aplikasirpl2.model.Izin;
 import com.mycompany.aplikasirpl2.controller.PegawaiController;
+import com.mycompany.aplikasirpl2.controller.IzinController;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.time.LocalDate;
 import java.util.List;
 
 // Import JasperReports
@@ -24,12 +27,20 @@ public class AplikasiRPL2GUI extends JFrame {
     private DefaultTableModel tableModel;
     private JButton btnTambah, btnCari, btnHapus, btnClear, btnCetak;
 
+    // Komponen Fitur Izin
+    private JTextField txtIzinIdPegawai, txtIzinNama, txtIzinTanggal, txtIzinKet;
+    private JComboBox<String> cmbJenisIzin;
+    private JTable tableIzin;
+    private DefaultTableModel izinTableModel;
+    private JButton btnAjukanIzin, btnHapusIzin;
+
     // Inisialisasi Controller untuk Hibernate & Database
     private PegawaiController controller = new PegawaiController();
+    private IzinController izinController = new IzinController();
 
     public AplikasiRPL2GUI() {
         setTitle("Aplikasi Karyawanku - Praktikum RPL 2 (Database Connected)");
-        setSize(850, 600);
+        setSize(950, 720);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
@@ -92,6 +103,9 @@ public class AplikasiRPL2GUI extends JFrame {
 
         add(panelForm, BorderLayout.WEST);
 
+        // Panel Kanan: Tabel Karyawan (Atas) & Panel IZIN (Bawah)
+        JPanel panelKanan = new JPanel(new GridLayout(2, 1, 8, 8));
+
         // Panel Tabel Database
         JPanel panelTabel = new JPanel(new BorderLayout(5, 5));
         panelTabel.setBorder(BorderFactory.createTitledBorder("Database Karyawan"));
@@ -110,17 +124,70 @@ public class AplikasiRPL2GUI extends JFrame {
         JScrollPane scrollPane = new JScrollPane(tablePegawai);
         panelTabel.add(scrollPane, BorderLayout.CENTER);
 
-        add(panelTabel, BorderLayout.CENTER);
+        // Panel IZIN
+        JPanel panelIzin = new JPanel(new BorderLayout(5, 5));
+        panelIzin.setBorder(BorderFactory.createTitledBorder("IZIN"));
 
-        // Event Handling Tombol
+        JPanel formIzin = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 3));
+        txtIzinIdPegawai = new JTextField(6);
+        txtIzinNama = new JTextField(12);
+        cmbJenisIzin = new JComboBox<>(new String[]{"Izin", "Sakit", "Cuti"});
+        txtIzinTanggal = new JTextField(LocalDate.now().toString(), 9);
+        txtIzinKet = new JTextField(12);
+        btnAjukanIzin = new JButton("Simpan Izin");
+        btnHapusIzin = new JButton("Hapus Izin");
+
+        formIzin.add(new JLabel("ID:"));
+        formIzin.add(txtIzinIdPegawai);
+        formIzin.add(new JLabel("Nama:"));
+        formIzin.add(txtIzinNama);
+        formIzin.add(new JLabel("Jenis:"));
+        formIzin.add(cmbJenisIzin);
+        formIzin.add(new JLabel("Tgl:"));
+        formIzin.add(txtIzinTanggal);
+        formIzin.add(new JLabel("Ket:"));
+        formIzin.add(txtIzinKet);
+        formIzin.add(btnAjukanIzin);
+        formIzin.add(btnHapusIzin);
+
+        panelIzin.add(formIzin, BorderLayout.NORTH);
+
+        String[] kolomIzin = {"ID Izin", "ID Pegawai", "Nama Pegawai", "Jenis", "Tanggal", "Keterangan"};
+        izinTableModel = new DefaultTableModel(kolomIzin, 0);
+        tableIzin = new JTable(izinTableModel);
+        panelIzin.add(new JScrollPane(tableIzin), BorderLayout.CENTER);
+
+        panelKanan.add(panelTabel);
+        panelKanan.add(panelIzin);
+        add(panelKanan, BorderLayout.CENTER);
+
+        // Event Handling Tombol Karyawan
         btnTambah.addActionListener(e -> tambahData());
         btnClear.addActionListener(e -> clearForm());
         btnHapus.addActionListener(e -> hapusData());
         btnCari.addActionListener(e -> cariData());
         btnCetak.addActionListener(e -> cetakLaporanJasper());
 
+        // Isi otomatis ID & Nama izin saat baris tabel pegawai diklik
+        tablePegawai.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int row = tablePegawai.getSelectedRow();
+                if (row != -1) {
+                    Object idVal = tableModel.getValueAt(row, 0);
+                    Object namaVal = tableModel.getValueAt(row, 1);
+                    txtIzinIdPegawai.setText(idVal != null ? idVal.toString() : "");
+                    txtIzinNama.setText(namaVal != null ? namaVal.toString() : "");
+                }
+            }
+        });
+
+        // Event Handling Tombol Izin
+        btnAjukanIzin.addActionListener(e -> tambahIzin());
+        btnHapusIzin.addActionListener(e -> hapusIzin());
+
         // Load data dari database saat pertama kali dibuka
         loadDataKeTabel();
+        loadDataIzinKeTabel();
     }
 
     private long formatGajiLong(Pegawai p) {
@@ -137,6 +204,52 @@ public class AplikasiRPL2GUI extends JFrame {
                 p.getDepartemen(),
                 "Rp " + formatGajiLong(p)
             });
+        }
+    }
+
+    private void loadDataIzinKeTabel() {
+        izinTableModel.setRowCount(0);
+        List<Izin> list = izinController.getAllIzin();
+        for (Izin iz : list) {
+            izinTableModel.addRow(new Object[]{
+                iz.getIdIzin(),
+                iz.getIdPegawai(),
+                iz.getNamaPegawai(),
+                iz.getJenisIzin(),
+                iz.getTanggalIzin(),
+                iz.getKeterangan()
+            });
+        }
+    }
+
+    private void tambahIzin() {
+        String idPeg = txtIzinIdPegawai.getText().trim();
+        String namaPeg = txtIzinNama.getText().trim();
+        String jenis = cmbJenisIzin.getSelectedItem().toString();
+        String tanggal = txtIzinTanggal.getText().trim();
+        String ket = txtIzinKet.getText().trim();
+
+        if (idPeg.isEmpty() || namaPeg.isEmpty() || tanggal.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "ID Pegawai, Nama, dan Tanggal Izin wajib diisi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Izin izin = new Izin(idPeg, namaPeg, jenis, tanggal, ket);
+        izinController.ajukanIzin(izin);
+        txtIzinKet.setText("");
+        loadDataIzinKeTabel();
+        JOptionPane.showMessageDialog(this, "Data izin berhasil disimpan!");
+    }
+
+    private void hapusIzin() {
+        int selectedRow = tableIzin.getSelectedRow();
+        if (selectedRow != -1) {
+            Integer idIzin = Integer.valueOf(izinTableModel.getValueAt(selectedRow, 0).toString());
+            izinController.hapusIzin(idIzin);
+            loadDataIzinKeTabel();
+            JOptionPane.showMessageDialog(this, "Data izin berhasil dihapus!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Pilih baris data izin yang ingin dihapus terlebih dahulu!");
         }
     }
 

@@ -20,5 +20,6 @@
 
         <!-- Daftarkan mapping model kamu nanti di sini -->
         <mapping class="com.mycompany.aplikasirpl2.model.Pegawai"/>
+        <mapping class="com.mycompany.aplikasirpl2.model.Izin"/>
     </session-factory>
 </hibernate-configuration>
